@@ -1,0 +1,103 @@
+Step 1/6 : FROM erlang:latest
+ ---> e255b1fc88ae
+Step 2/6 : COPY bin/ ./
+ ---> Using cache
+ ---> e0c904f7916e
+Step 3/6 : RUN apt-get update     && apt-get -y --no-install-recommends install libpq-dev git
+ ---> Using cache
+ ---> 57c6cca9a528
+Step 4/6 : RUN git clone https://github.com/epgsql/epgsql.git
+ ---> Using cache
+ ---> bfcc4849594d
+Step 5/6 : RUN chmod +x ./main.erl     && erlc ./main.erl
+ ---> Using cache
+ ---> f4f947bfc3ca
+Step 6/6 : CMD ["erl", "-noshell", "-s", "main", "start", "-s", "init", "stop"]
+ ---> Using cache
+ ---> d12607378caf
+Successfully built d12607378caf
+Successfully tagged erlang-cli-postgres-simple_app:latest
+Attaching to erlang-cli-postgres-simple_db_1, erlang-cli-postgres-simple_app_1
+[33mdb_1   |[0m ********************************************************************************
+[33mdb_1   |[0m WARNING: POSTGRES_HOST_AUTH_METHOD has been set to "trust". This will allow
+[33mdb_1   |[0m          anyone with access to the Postgres port to access your database without
+[33mdb_1   |[0m          a password, even if POSTGRES_PASSWORD is set. See PostgreSQL
+[33mdb_1   |[0m          documentation about "trust":
+[33mdb_1   |[0m          https://www.postgresql.org/docs/current/auth-trust.html
+[33mdb_1   |[0m          In Docker's default configuration, this is effectively any other
+[33mdb_1   |[0m          container on the same system.
+[33mdb_1   |[0m 
+[33mdb_1   |[0m          It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace
+[33mdb_1   |[0m          it with "-e POSTGRES_PASSWORD=password" instead to set a password in
+[33mdb_1   |[0m          "docker run".
+[33mdb_1   |[0m ********************************************************************************
+[33mdb_1   |[0m The files belonging to this database system will be owned by user "postgres".
+[33mdb_1   |[0m This user must also own the server process.
+[33mdb_1   |[0m 
+[33mdb_1   |[0m The database cluster will be initialized with locale "en_US.utf8".
+[33mdb_1   |[0m The default database encoding has accordingly been set to "UTF8".
+[33mdb_1   |[0m The default text search configuration will be set to "english".
+[33mdb_1   |[0m 
+[33mdb_1   |[0m Data page checksums are disabled.
+[33mdb_1   |[0m 
+[33mdb_1   |[0m fixing permissions on existing directory /var/lib/postgresql/data ... ok
+[33mdb_1   |[0m creating subdirectories ... ok
+[33mdb_1   |[0m selecting dynamic shared memory implementation ... posix
+[33mdb_1   |[0m selecting default max_connections ... 100
+[33mdb_1   |[0m selecting default shared_buffers ... 128MB
+[33mdb_1   |[0m selecting default time zone ... UTC
+[33mdb_1   |[0m creating configuration files ... ok
+[33mdb_1   |[0m running bootstrap script ... ok
+[33mdb_1   |[0m performing post-bootstrap initialization ... sh: locale: not found
+[33mdb_1   |[0m 2021-03-29 22:53:44.361 UTC [31] WARNING:  no usable system locales were found
+[36mapp_1  |[0m {"init terminating in do_boot",{undef,[{pgsql,connect,["db","maria","pass",[{database,"beverage"}]],[]},{main,start,0,[{file,"main.erl"},{line,6}]},{init,start_em,1,[]},{init,do_boot,3,[]}]}}
+[36mapp_1  |[0m init terminating in do_boot ({undef,[{pgsql,connect,[[_],[_],[_],[_]],[]},{main,start,0,[{_},{_}]},{init,start_em,1,[]},{init,do_boot,3,[]}]})
+[36mapp_1  |[0m 
+[36mapp_1  |[0m Crash dump is being written to: erl_crash.dump...done
+[33mdb_1   |[0m ok
+[33mdb_1   |[0m syncing data to disk ... ok
+[33mdb_1   |[0m 
+[33mdb_1   |[0m 
+[33mdb_1   |[0m Success. You can now start the database server using:
+[33mdb_1   |[0m 
+[33mdb_1   |[0m     pg_ctl -D /var/lib/postgresql/data -l logfile start
+[33mdb_1   |[0m 
+[33mdb_1   |[0m initdb: warning: enabling "trust" authentication for local connections
+[33mdb_1   |[0m You can change this by editing pg_hba.conf or using the option -A, or
+[33mdb_1   |[0m --auth-local and --auth-host, the next time you run initdb.
+[36merlang-cli-postgres-simple_app_1 exited with code 1
+[0m[33mdb_1   |[0m waiting for server to start....2021-03-29 22:53:46.471 UTC [36] LOG:  starting PostgreSQL 13.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 10.2.1_pre1) 10.2.1 20201203, 64-bit
+[33mdb_1   |[0m 2021-03-29 22:53:46.473 UTC [36] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+[33mdb_1   |[0m 2021-03-29 22:53:46.485 UTC [37] LOG:  database system was shut down at 2021-03-29 22:53:45 UTC
+[33mdb_1   |[0m 2021-03-29 22:53:46.491 UTC [36] LOG:  database system is ready to accept connections
+[33mdb_1   |[0m  done
+[33mdb_1   |[0m server started
+[33mdb_1   |[0m CREATE DATABASE
+[33mdb_1   |[0m 
+[33mdb_1   |[0m 
+[33mdb_1   |[0m /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/00-create-table.sql
+[33mdb_1   |[0m CREATE SEQUENCE
+[33mdb_1   |[0m CREATE TABLE
+[33mdb_1   |[0m 
+[33mdb_1   |[0m 
+[33mdb_1   |[0m /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/01-insert-table.sql
+[33mdb_1   |[0m INSERT 0 4
+[33mdb_1   |[0m 
+[33mdb_1   |[0m 
+[33mdb_1   |[0m waiting for server to shut down...2021-03-29 22:53:46.926 UTC [36] LOG:  received fast shutdown request
+[33mdb_1   |[0m .2021-03-29 22:53:46.929 UTC [36] LOG:  aborting any active transactions
+[33mdb_1   |[0m 2021-03-29 22:53:46.936 UTC [36] LOG:  background worker "logical replication launcher" (PID 43) exited with exit code 1
+[33mdb_1   |[0m 2021-03-29 22:53:46.941 UTC [38] LOG:  shutting down
+[33mdb_1   |[0m 2021-03-29 22:53:46.978 UTC [36] LOG:  database system is shut down
+[33mdb_1   |[0m  done
+[33mdb_1   |[0m server stopped
+[33mdb_1   |[0m 
+[33mdb_1   |[0m PostgreSQL init process complete; ready for start up.
+[33mdb_1   |[0m 
+[33mdb_1   |[0m 2021-03-29 22:53:47.090 UTC [1] LOG:  starting PostgreSQL 13.1 on x86_64-pc-linux-musl, compiled by gcc (Alpine 10.2.1_pre1) 10.2.1 20201203, 64-bit
+[33mdb_1   |[0m 2021-03-29 22:53:47.095 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+[33mdb_1   |[0m 2021-03-29 22:53:47.099 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+[33mdb_1   |[0m 2021-03-29 22:53:47.103 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+[33mdb_1   |[0m 2021-03-29 22:53:47.110 UTC [54] LOG:  database system was shut down at 2021-03-29 22:53:46 UTC
+[33mdb_1   |[0m 2021-03-29 22:53:47.117 UTC [1] LOG:  database system is ready to accept connections
+Gracefully stopping... (press Ctrl+C again to force)
